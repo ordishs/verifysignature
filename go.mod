@@ -1,3 +1,3 @@
-module github.com/ordishs/verify_signature
+module github.com/ordishs/verifysignature
 
 go 1.20

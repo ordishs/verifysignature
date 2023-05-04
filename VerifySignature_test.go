@@ -23,6 +23,11 @@ func TestVerifySignature(t *testing.T) {
 	assert.True(t, res)
 }
 
+func TestVerifySignature2(t *testing.T) {
+	res := VerifySignature2(msg, sig, pubkey)
+	assert.True(t, res)
+}
+
 func BenchmarkVerifyGo(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		VerifySignature(msg, sig, pubkey)
@@ -32,6 +37,12 @@ func BenchmarkVerifyGo(b *testing.B) {
 func BenchmarkVerify(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		VerifySignature(msg, sig, pubkey)
+	}
+}
+
+func BenchmarkVerify2(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		VerifySignature2(msg, sig, pubkey)
 	}
 }
 
@@ -47,6 +58,14 @@ func BenchmarkVerifyParallel(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
 		for pb.Next() {
 			VerifySignature(msg, sig, pubkey)
+		}
+	})
+}
+
+func BenchmarkVerify2Parallel(b *testing.B) {
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			VerifySignature2(msg, sig, pubkey)
 		}
 	})
 }

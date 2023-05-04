@@ -8,5 +8,6 @@
     "stdlib",
     "uchar",
     "verifysignature"
-  ]
+  ],
+  "cmake.configureOnOpen": false
 }

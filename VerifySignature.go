@@ -7,6 +7,12 @@ package verifysignature
 #include <secp256k1.h>
 */
 import "C"
+import (
+	"crypto/ecdsa"
+	"math/big"
+
+	"github.com/libsv/go-bk/bec"
+)
 
 // VerifySignature verifies that the given signature for the given message was signed by the given public key.
 func VerifySignature(message []byte, signature []byte, publicKey []byte) bool {
@@ -39,4 +45,17 @@ func VerifySignature(message []byte, signature []byte, publicKey []byte) bool {
 	}
 
 	return true
+}
+
+func VerifySignatureGo(message []byte, signature []byte, publicKey []byte) bool {
+	// Parse signature
+	r := new(big.Int).SetBytes(signature[:32])
+	s := new(big.Int).SetBytes(signature[32:])
+
+	pubKey, err := bec.ParsePubKey(publicKey, bec.S256())
+	if err != nil {
+		panic(err)
+	}
+
+	return ecdsa.Verify(pubKey.ToECDSA(), message, r, s)
 }

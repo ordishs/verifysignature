@@ -2,9 +2,10 @@ package verifysignature
 
 /*
 	#cgo CFLAGS: -I./include
-	#cgo LDFLAGS: ./lib/libsecp256k1.a -lgmp
+	#cgo LDFLAGS: -L./lib -lsecp256k1
+	#cgo LDFLAGS: -L./lib -lsecp256k1
 	#include <stdlib.h>
-	#include "secp256k1.h"
+	#include <secp256k1.h>
 */
 import "C"
 import (

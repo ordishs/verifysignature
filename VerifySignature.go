@@ -9,7 +9,6 @@ package verifysignature
 import "C"
 import (
 	"crypto/ecdsa"
-	"math/big"
 
 	"github.com/libsv/go-bk/bec"
 )
@@ -48,14 +47,12 @@ func VerifySignature(message []byte, signature []byte, publicKey []byte) bool {
 }
 
 func VerifySignatureGo(message []byte, signature []byte, publicKey []byte) bool {
-	// Parse signature
-	r := new(big.Int).SetBytes(signature[:32])
-	s := new(big.Int).SetBytes(signature[32:])
+	sig, _ := bec.ParseSignature(signature, bec.S256())
 
 	pubKey, err := bec.ParsePubKey(publicKey, bec.S256())
 	if err != nil {
 		panic(err)
 	}
 
-	return ecdsa.Verify(pubKey.ToECDSA(), message, r, s)
+	return ecdsa.Verify(pubKey.ToECDSA(), message, sig.R, sig.S)
 }

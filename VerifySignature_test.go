@@ -30,7 +30,7 @@ func TestVerifySignature2(t *testing.T) {
 
 func BenchmarkVerifyGo(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		VerifySignature(msg, sig, pubkey)
+		VerifySignatureGo(msg, sig, pubkey)
 	}
 }
 
